@@ -203,6 +203,16 @@ tools.wchisp.upload.params.verbose=
 tools.wchisp.upload.params.quiet=
 tools.wchisp.upload.pattern="{path}{cmd}" {upload.verbose} flash "{build.path}/{build.project_name}.elf"
 
+# TinyUF2: export a UF2, or copy to an explicitly selected mounted drive.
+# Double-tap RESET first; pass the mounted volume path as the upload port.
+# Conversion-only mode deliberately avoids uf2conv's broadcast deployment.
+tools.uf2.python=python3
+tools.uf2.python.windows=python
+tools.uf2.convert.pattern="{tools.uf2.python}" "{runtime.platform.path}/tools/uf2/uf2conv.py" -c -f 0x7b8c32a7 -b 0x8000 -o "{build.path}/{build.project_name}.uf2" "{build.path}/{build.project_name}.bin"
+tools.uf2.upload.params.verbose=
+tools.uf2.upload.params.quiet=
+tools.uf2.upload.pattern="{tools.uf2.python}" "{runtime.platform.path}/tools/uf2/uf2conv.py" -c -f 0x7b8c32a7 -b 0x8000 -o "{serial.port}/NEW.UF2" "{build.path}/{build.project_name}.bin"
+
 
 # Debugger configuration (general options)
 # ----------------------------------------

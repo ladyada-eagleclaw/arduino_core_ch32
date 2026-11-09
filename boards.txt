@@ -1198,3 +1198,71 @@ CH32L10x_EVT.menu.xserial.serialMulti=Multiple (Serial1-Serial4)
 CH32L10x_EVT.menu.xserial.serialMulti.build.serial_flags=-DSERIAL_UART_ENABLE_ALL=1
 CH32L10x_EVT.menu.xserial.none=No Serial (smallest sketch)
 CH32L10x_EVT.menu.xserial.none.build.serial_flags=-DHWSERIAL_NONE
+
+# Metro CH32V4x7: preserve the installed 32 KiB TinyUF2 bootloader.
+ADAFRUIT_METRO_CH32V407.name=Adafruit Metro CH32V407
+ADAFRUIT_METRO_CH32V407.build.core=arduino
+ADAFRUIT_METRO_CH32V407.build.board=ADAFRUIT_METRO_CH32V407
+ADAFRUIT_METRO_CH32V407.build.series=CH32V4x7
+ADAFRUIT_METRO_CH32V407.build.chip=CH32V407
+ADAFRUIT_METRO_CH32V407.build.variant=CH32V4x7/ADAFRUIT_METRO
+ADAFRUIT_METRO_CH32V407.build.variant_h=variant_ADAFRUIT_METRO.h
+ADAFRUIT_METRO_CH32V407.build.mcu=QingKe-V3V
+ADAFRUIT_METRO_CH32V407.build.march=rv32imac
+ADAFRUIT_METRO_CH32V407.build.mabi=ilp32
+ADAFRUIT_METRO_CH32V407.build.f_cpu=200000000
+ADAFRUIT_METRO_CH32V407.build.flags.clock=-DF_CPU=200000000 -DHSE_VALUE=25000000
+ADAFRUIT_METRO_CH32V407.build.flags.optimize=-Os
+ADAFRUIT_METRO_CH32V407.build.flags.debug=-DNDEBUG
+ADAFRUIT_METRO_CH32V407.build.flags.ldflags=--specs=nano.specs --specs=nosys.specs -Wl,--defsym=__FLASH_ORIGIN=0x8000
+ADAFRUIT_METRO_CH32V407.build.math_lib_gcc=-lm
+ADAFRUIT_METRO_CH32V407.build.ch_extra_lib=
+ADAFRUIT_METRO_CH32V407.build.IQ_math_RV32=
+ADAFRUIT_METRO_CH32V407.build.serial_flags=-DSERIAL_UART_INSTANCE=1
+ADAFRUIT_METRO_CH32V407.build.extra_flags=-DWIRE_SOFTWARE -DOPT_I2C_SLAVE=0
+ADAFRUIT_METRO_CH32V407.build.vid=0x239A
+ADAFRUIT_METRO_CH32V407.build.pid=0x817D
+ADAFRUIT_METRO_CH32V407.build.usb_flags=-DUSBCON -DUSE_TINYUSB -DUSB_VID={build.vid} -DUSB_PID={build.pid} "-I{runtime.platform.path}/libraries/Adafruit_TinyUSB_Arduino/src/arduino"
+ADAFRUIT_METRO_CH32V407.build.flash_offset=0x8000
+ADAFRUIT_METRO_CH32V407.upload.maximum_size=491520
+ADAFRUIT_METRO_CH32V407.upload.maximum_data_size=203776
+ADAFRUIT_METRO_CH32V407.upload.tool=uf2
+ADAFRUIT_METRO_CH32V407.upload.tool.default=uf2
+ADAFRUIT_METRO_CH32V407.recipe.objcopy.uf2.pattern={tools.uf2.convert.pattern}
+ADAFRUIT_METRO_CH32V407.upload.protocol=
+ADAFRUIT_METRO_CH32V407.vid.0=0x239A
+ADAFRUIT_METRO_CH32V407.pid.0=0x817D
+
+# Metro CH32V4x7: preserve the installed 32 KiB TinyUF2 bootloader.
+ADAFRUIT_METRO_CH32V467.name=Adafruit Metro CH32V467
+ADAFRUIT_METRO_CH32V467.build.core=arduino
+ADAFRUIT_METRO_CH32V467.build.board=ADAFRUIT_METRO_CH32V467
+ADAFRUIT_METRO_CH32V467.build.series=CH32V4x7
+ADAFRUIT_METRO_CH32V467.build.chip=CH32V467
+ADAFRUIT_METRO_CH32V467.build.variant=CH32V4x7/ADAFRUIT_METRO
+ADAFRUIT_METRO_CH32V467.build.variant_h=variant_ADAFRUIT_METRO.h
+ADAFRUIT_METRO_CH32V467.build.mcu=QingKe-V3V
+ADAFRUIT_METRO_CH32V467.build.march=rv32imac
+ADAFRUIT_METRO_CH32V467.build.mabi=ilp32
+ADAFRUIT_METRO_CH32V467.build.f_cpu=200000000
+ADAFRUIT_METRO_CH32V467.build.flags.clock=-DF_CPU=200000000 -DHSE_VALUE=25000000
+ADAFRUIT_METRO_CH32V467.build.flags.optimize=-Os
+ADAFRUIT_METRO_CH32V467.build.flags.debug=-DNDEBUG
+ADAFRUIT_METRO_CH32V467.build.flags.ldflags=--specs=nano.specs --specs=nosys.specs -Wl,--defsym=__FLASH_ORIGIN=0x8000
+ADAFRUIT_METRO_CH32V467.build.math_lib_gcc=-lm
+ADAFRUIT_METRO_CH32V467.build.ch_extra_lib=
+ADAFRUIT_METRO_CH32V467.build.IQ_math_RV32=
+ADAFRUIT_METRO_CH32V467.build.serial_flags=-DSERIAL_UART_INSTANCE=1
+ADAFRUIT_METRO_CH32V467.build.extra_flags=-DWIRE_SOFTWARE -DOPT_I2C_SLAVE=0
+ADAFRUIT_METRO_CH32V467.build.vid=0x239A
+ADAFRUIT_METRO_CH32V467.build.pid=0x817F
+ADAFRUIT_METRO_CH32V467.build.usb_flags=-DUSBCON -DUSE_TINYUSB -DUSB_VID={build.vid} -DUSB_PID={build.pid} "-I{runtime.platform.path}/libraries/Adafruit_TinyUSB_Arduino/src/arduino"
+ADAFRUIT_METRO_CH32V467.build.flash_offset=0x8000
+ADAFRUIT_METRO_CH32V467.upload.maximum_size=491520
+ADAFRUIT_METRO_CH32V467.upload.maximum_data_size=203776
+ADAFRUIT_METRO_CH32V467.upload.tool=uf2
+ADAFRUIT_METRO_CH32V467.upload.tool.default=uf2
+ADAFRUIT_METRO_CH32V467.recipe.objcopy.uf2.pattern={tools.uf2.convert.pattern}
+ADAFRUIT_METRO_CH32V467.upload.protocol=
+ADAFRUIT_METRO_CH32V467.vid.0=0x239A
+ADAFRUIT_METRO_CH32V467.pid.0=0x817F
