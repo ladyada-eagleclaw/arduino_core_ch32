@@ -118,10 +118,10 @@
 
 // Default pins for each hardware serial port.
 #ifndef PIN_SERIAL1_RX
-  #define PIN_SERIAL1_RX     PD_6  /* UART1 default RX pin */
+  #define PIN_SERIAL1_RX     PD6  /* UART1 default RX pin */
 #endif
 #ifndef PIN_SERIAL1_TX
-  #define PIN_SERIAL1_TX     PD_5  /* UART1 default TX pin */
+  #define PIN_SERIAL1_TX     PD5  /* UART1 default TX pin */
 #endif
 
 

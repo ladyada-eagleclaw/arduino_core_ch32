@@ -123,16 +123,16 @@
 // Default pins for each hardware serial port.
 #ifndef PIN_SERIAL1_RX
   #if defined(I2C_MODULE_ENABLED)
-    #define PIN_SERIAL1_RX         PD_6
+    #define PIN_SERIAL1_RX         PD6
   #else  
-    #define PIN_SERIAL1_RX         PC_1   // use pin-remap UART_3
+    #define PIN_SERIAL1_RX         PC1   // use pin-remap UART_3
   #endif // I2C_MODULE_ENABLED
   #endif
   #ifndef PIN_SERIAL1_TX
   #if defined(I2C_MODULE_ENABLED)
-    #define PIN_SERIAL1_TX         PD_5
+    #define PIN_SERIAL1_TX         PD5
   #else  
-    #define PIN_SERIAL1_TX         PC_0   // use pin-remap UART_3
+    #define PIN_SERIAL1_TX         PC0   // use pin-remap UART_3
   #endif // I2C_MODULE_ENABLED
   #endif
 
