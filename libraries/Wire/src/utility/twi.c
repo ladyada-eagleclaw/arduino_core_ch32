@@ -41,6 +41,8 @@
 #include "clock.h"  // MxRD 261019: for definition of extern uint64_t GetTick(void);
 #include "PinAF_ch32yyxx.h"
 
+#if !defined(WIRE_SOFTWARE)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -733,5 +735,7 @@ void I2C2_ER_IRQHandler(void)
 #ifdef __cplusplus
 }
 #endif
+
+#endif // !WIRE_SOFTWARE
 
 

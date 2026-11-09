@@ -87,7 +87,9 @@ void TwoWire::begin(uint8_t address, bool generalCall, bool NoStretchMode)
 
   _i2c.NoStretchMode = (NoStretchMode == true) ? 1 : 0;
 
+#if !defined(WIRE_SOFTWARE)
   recoverBus(); // in case I2C bus (device) is stuck after a reset for example
+#endif
 
   i2c_custom_init(&_i2c, 100000, I2C_AcknowledgedAddress_7bit, ownAddress);
 
@@ -129,13 +131,17 @@ void TwoWire::setClock(uint32_t frequency)
   }
 }
 
-uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddress, uint8_t isize, uint8_t sendStop)
-{
-  (void)sendStop;   // TODO: Implement the ability to send a stop bit or allow re-starting I2C
+uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity,
+                             uint32_t iaddress, uint8_t isize,
+                             uint8_t sendStop) {
+#if !defined(WIRE_SOFTWARE)
+  // The hardware backend does not yet support reads without STOP.
+  (void)sendStop;
+#endif
   uint8_t read = 0;
 
   if (_i2c.isMaster == 1) {
-    allocateRxBuffer(quantity);   
+    allocateRxBuffer(quantity);
     if (isize > 0) {
       // send internal address; this mode allows sending a repeated start to access
       // some devices' internal registers. This function is executed by the hardware
@@ -152,7 +158,12 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
       }
       endTransmission( 0 );   //without stop
     }
+#if defined(WIRE_SOFTWARE)
+    if (I2C_OK ==
+        i2c_software_read(&_i2c, address << 1, rxBuffer, quantity, sendStop)) {
+#else
     if (I2C_OK == i2c_master_read(&_i2c, address << 1, rxBuffer, quantity)) {
+#endif
       read = quantity;
     }
     // set rx buffer iterator vars
@@ -161,7 +172,6 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddres
   }
   return read;
 }
-
 
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop)
 {

@@ -108,6 +108,12 @@ struct i2c_s {
   uint8_t isMaster;
   uint8_t generalCall;
   uint8_t NoStretchMode;
+#if defined(WIRE_SOFTWARE)
+  uint16_t halfPeriodUs;
+  bool softwareReady;
+  bool softwareHeld;
+  bool softwareTimeout;
+#endif
 };
 
 ///@brief I2C state
@@ -131,6 +137,10 @@ void i2c_setTiming(i2c_t *obj, uint32_t frequency);
 i2c_status_e i2c_master_write(i2c_t *obj, uint8_t dev_address, uint8_t *data, uint16_t size,  uint8_t sendstop);
 i2c_status_e i2c_slave_write_IT(i2c_t *obj, uint8_t *data, uint16_t size);
 i2c_status_e i2c_master_read(i2c_t *obj, uint8_t dev_address, uint8_t *data, uint16_t size);
+#if defined(WIRE_SOFTWARE)
+i2c_status_e i2c_software_read(i2c_t *obj, uint8_t dev_address, uint8_t *data,
+                             uint16_t size, bool sendstop);
+#endif
 
 i2c_status_e i2c_slave_write(i2c_t *obj, uint8_t *data, uint16_t size);
 i2c_status_e i2c_slave_read(i2c_t *obj, uint8_t *data, uint16_t size);
