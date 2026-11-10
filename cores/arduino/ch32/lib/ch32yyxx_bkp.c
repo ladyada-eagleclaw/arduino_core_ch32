@@ -1,3 +1,7 @@
+#if defined(CH32V4x7)
+#include "ch32v4x7_bkp.c"
+#endif
+
 #ifdef CH32V00x  
 //nothing
 #elif defined(CH32V10x)

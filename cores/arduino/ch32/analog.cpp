@@ -34,10 +34,10 @@ static PinName g_current_pin = NC;
 /* Private_Defines */
 #if defined(ADC_MODULE_ENABLED) && !defined(ADC_MODULE_ONLY)
 
-#if (defined(CH32V20x) || defined(CH32V30x) || defined(CH32V30x_C) || defined(CH32V10x) || defined(CH32L10x) || defined(CH32VM00X) )
+#if (defined(CH32V20x) || defined(CH32V30x) || defined(CH32V30x_C) || defined(CH32V4x7) || defined(CH32V10x) || defined(CH32L10x) || defined(CH32VM00X) )
 
 /* Default to use maximum sampling period */
-#if defined(CH32L10x) || defined(CH32VM00X)
+#if defined(CH32L10x) || defined(CH32VM00X) || defined(CH32V4x7)
 
 #ifndef ADC_SAMPLINGTIME
 #if defined(ADC_SampleTime_CyclesMode7) 
@@ -88,7 +88,7 @@ static PinName g_current_pin = NC;
  * Default to use maximum sampling period 
  */
 
-#if defined(CH32L10x) || defined(CH32VM00X)
+#if defined(CH32L10x) || defined(CH32VM00X) || defined(CH32V4x7)
 
 #ifndef ADC_SAMPLINGTIME_INTERNAL
 #if defined(ADC_SampleTime_CyclesMode7)
@@ -661,7 +661,7 @@ uint16_t adc_read_value(PinName pin, uint32_t resolution)
   ADC_InitStructure.ADC_ContinuousConvMode   = DISABLE;
   ADC_InitStructure.ADC_NbrOfChannel         = 1; 
   ADC_InitStructure.ADC_ExternalTrigConv     = ADC_ExternalTrigConv_None;
- #if !defined(CH32V00x) && !defined(CH32V10x)  && !defined(CH32VM00X)
+ #if !defined(CH32V00x) && !defined(CH32V10x)  && !defined(CH32VM00X) && !defined(CH32V4x7)
   ADC_InitStructure.ADC_OutputBuffer         = ENABLE;
 #endif
   ADC_Init(padc, &ADC_InitStructure);

@@ -1,3 +1,7 @@
+#if defined(CH32V4x7)
+#include "ch32v4x7_sdio.h"
+#endif
+
 #ifndef __CH32YYXX_SDIO_H_
 #define __CH32YYXX_SDIO_H_
 

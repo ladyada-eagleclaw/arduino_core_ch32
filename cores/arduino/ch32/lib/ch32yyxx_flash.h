@@ -1,3 +1,7 @@
+#if defined(CH32V4x7)
+#include "ch32v4x7_flash.h"
+#endif
+
 #ifndef __CH32YYXX_FLASH_H_
 #define __CH32YYXX_FLASH_H_
 

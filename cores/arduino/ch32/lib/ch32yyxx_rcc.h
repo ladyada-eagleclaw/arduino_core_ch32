@@ -1,3 +1,7 @@
+#if defined(CH32V4x7)
+#include "ch32v4x7_rcc.h"
+#endif
+
 #ifndef __CH32YYXX_RCC_H_
 #define __CH32YYXX_RCC_H_
 

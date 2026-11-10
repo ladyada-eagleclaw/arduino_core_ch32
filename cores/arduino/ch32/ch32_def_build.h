@@ -3,7 +3,9 @@
 
 #if !defined(COM_STARTUP_FILE)
 
-  #if defined(CH32V00x)
+  #if defined(CH32V4x7)
+     #define COM_STARTUP_FILE "startup_ch32v4x7.S"
+  #elif defined(CH32V00x)
      #define  COM_STARTUP_FILE "startup_ch32v00x.S"
   #elif defined(CH32VM00X)
      #define  COM_STARTUP_FILE "startup_ch32v00X.S"

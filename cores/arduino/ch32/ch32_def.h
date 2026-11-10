@@ -24,7 +24,10 @@
 /*
  *All defined 
  */
-#if defined(CH32V20x) || defined(CH32V203xB) || defined(CH32V208)
+#if defined(CH32V4x7)
+  #include "ch32v4x7.h"
+  #include "ch32v4x7_compat.h"
+#elif defined(CH32V20x) || defined(CH32V203xB) || defined(CH32V208)
   #include "ch32v20x.h"
 #elif defined(CH32V30x) || defined(CH32V30x_C)
   #include "ch32v30x.h"

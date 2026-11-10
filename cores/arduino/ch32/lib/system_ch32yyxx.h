@@ -1,3 +1,7 @@
+#if defined(CH32V4x7)
+#include "system_ch32v4x7.h"
+#endif
+
 
 #ifndef _SYSTEM_CH32YYXX_H_
 #define _SYSTEM_CH32YYXX_H_

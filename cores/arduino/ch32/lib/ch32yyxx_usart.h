@@ -1,3 +1,7 @@
+#if defined(CH32V4x7)
+#include "ch32v4x7_usart.h"
+#endif
+
 #ifndef __CH32YYXX_USART_H_
 #define __CH32YYXX_USART_H_
 

@@ -1,3 +1,7 @@
+#if defined(CH32V4x7)
+#include "ch32v4x7_can.h"
+#endif
+
 #ifndef __CH32YYXX_CAN_H_
 #define __CH32YYXX_CAN_H_
 

@@ -1,3 +1,7 @@
+#if defined(CH32V4x7)
+#include "ch32v4x7_dma.h"
+#endif
+
 #ifndef __CH32YYXX_DMA_H__
 #define __CH32YYXX_DMA_H__
 
