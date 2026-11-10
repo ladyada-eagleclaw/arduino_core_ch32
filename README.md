@@ -74,8 +74,12 @@ If your board variant doesn't define `LED_BUILTIN`, substitute a GPIO pin that h
 | CH32V10x | CH32V103R8T6_BLACK | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅ | |
 | CH32V20x | CH32V203G8U        | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅ | |
 | CH32V30x | CH32V307VCT6_BLACK | ✅ |   | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅ | |
+| CH32V4x7 | Adafruit Metro CH32V467 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅¹ | |
 | CH32X035 | CH32X035G8U        | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅ | |
 
+¹ Metro uses a software I2C controller on its PB10/PB11 connector pads.
+The CH32V407 variant also builds; its physical validation is pending.
+See the [Metro pin map and TinyUF2 upload instructions](variants/CH32V4x7/ADAFRUIT_METRO/README.md).
 
 | Family | Board |
 | :-: | :-- |
@@ -89,6 +93,9 @@ Missing your chip? [Open an issue](https://github.com/ch32-community/arduino_cor
 ## 🖥️ Platform setup
 
 Uploads go through a **WCH-LinkE** programmer using the OpenOCD and toolchain builds from [MounRiver Studio (MRS)](http://www.mounriver.com/).
+
+Metro CH32V407/467 variants instead use an installed TinyUF2 bootloader and
+accept UF2 files on their USB drive; see the Metro instructions linked above.
 
 <details>
 <summary><b>Windows</b></summary>

@@ -41,7 +41,8 @@ void loop() {
     else if (command == 'm') testHeaderPWM();
     else if (command == 'a') testDAC();
     else if (command == 'r') testPSRAM();
-    else if (command == 's') testSDIO();
+    else if (command == 's') testSDIO(true);
+    else if (command == 'j') testSDIO(false);
     else if (command == 'w') testSDFile();
     else if (command == 'i') testI2C();
     else if (command == 'e') testEthernet();
@@ -443,10 +444,10 @@ void testPSRAM() {
 }
 
 
-void testSDIO() {
+void testSDIO(bool fourBit) {
   MetroSDIO card;
-  bool pass = card.begin();
-  result("SDIO four-bit initialization", pass);
+  bool pass = card.begin(fourBit);
+  result(fourBit ? "SDIO four-bit initialization" : "SDIO one-bit initialization", pass);
   if (!pass) {
     SerialUSB.print("SDIO command="); SerialUSB.print(card.lastCommand());
     SerialUSB.print(" error=0x"); SerialUSB.print(card.error(), HEX);
