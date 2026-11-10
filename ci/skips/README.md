@@ -42,7 +42,8 @@ New upstream examples automatically inherit library-level restrictions.
 
 Metro examples are restricted to the two Metro board IDs. Their engineering
 fixtures under `extras` require bench-specific dependencies and are excluded;
-the Miscellaneous builds compile BlinkUSB for both CH32V407 and CH32V467.
+the Miscellaneous builds compile BlinkUSB and the ordinary SimpleSerialRead
+example for both CH32V407 and CH32V467.
 
 For eligible TinyUSB examples, V20x defaults to `usb=tinyusb_usbd` and V30x to
 `usb=tinyusb_usbhs`. An explicitly selected USB mode is preserved; `usb=none`

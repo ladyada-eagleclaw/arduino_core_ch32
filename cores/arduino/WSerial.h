@@ -5,7 +5,13 @@
 //#include "HardwareSerial.h"   // MxRD 261013: moved to below to allow guards for HAVE_HWSERIALx
 
 #if defined(USE_TINYUSB)
+// Discover the library for ordinary Serial sketches. Core compilation uses
+// the internal header because Arduino omits library include paths for the core.
+#if ARDUINO_LIB_DISCOVERY_PHASE
+#include <Adafruit_TinyUSB.h>
+#else
 #include "Adafruit_USBD_CDC.h"
+#endif
 #if defined(Serial)
   #undef Serial   // MxRD: undef Serial defined when Multiple Serial was selected
 #endif
