@@ -135,6 +135,7 @@ void SystemInit (void)
   RCC->INTR = 0x008F0000;   
 
   SetSysClock();
+  SystemCoreClockUpdate();
 }
 
 /*********************************************************************

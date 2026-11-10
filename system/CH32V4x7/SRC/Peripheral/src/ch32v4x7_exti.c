@@ -28,7 +28,7 @@ void EXTI_DeInit(void)
     EXTI->EVENR = 0x00000000;
     EXTI->RTENR = 0x00000000;
     EXTI->FTENR = 0x00000000;
-    EXTI->INTFR = 0x000FFFFF;
+    EXTI->INTFR = 0x003FFFFF;
 }
 
 /*********************************************************************

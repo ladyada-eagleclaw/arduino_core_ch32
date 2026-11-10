@@ -133,16 +133,17 @@ void USART_Init(USART_TypeDef *USARTx, USART_InitTypeDef *USART_InitStruct)
     uint32_t          fractionaldivider = 0x00;
     uint32_t          usartxbase = 0;
     uint64_t          apbclock = 0x00;
+    uint16_t          parity = USART_InitStruct->USART_Parity;
     RCC_ClocksTypeDef RCC_ClocksStatus;
 
-    if((USART_InitStruct->USART_Parity & 0xF000) == 0xF000)
+    tmpreg = USARTx->CTLR4;
+    tmpreg &= ~USART_CTLR4_CHECK_SEL;
+    if((parity & 0xF000) == 0xF000)
     {
-        tmpreg = USARTx->CTLR4;
-        tmpreg &= ~USART_CTLR4_CHECK_SEL;
-        tmpreg |= USART_InitStruct->USART_Parity & 0xC;
-        USARTx->CTLR4 = (uint16_t)tmpreg;
-        USART_InitStruct->USART_Parity = 0;
+        tmpreg |= parity & USART_CTLR4_CHECK_SEL;
+        parity = 0;
     }
+    USARTx->CTLR4 = (uint16_t)tmpreg;
 	
 	usartxbase = (uint32_t)USARTx;
 
@@ -153,7 +154,7 @@ void USART_Init(USART_TypeDef *USARTx, USART_InitTypeDef *USART_InitStruct)
     USARTx->CTLR2 = (uint16_t)tmpreg;
     tmpreg = USARTx->CTLR1;
     tmpreg &= CTLR1_CLEAR_Mask;
-    tmpreg |= (uint32_t)USART_InitStruct->USART_WordLength | USART_InitStruct->USART_Parity |
+    tmpreg |= (uint32_t)USART_InitStruct->USART_WordLength | parity |
               USART_InitStruct->USART_Mode;
     USARTx->CTLR1 = (uint16_t)tmpreg;
 

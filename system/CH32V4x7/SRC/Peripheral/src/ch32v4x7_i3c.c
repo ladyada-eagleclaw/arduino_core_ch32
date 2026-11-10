@@ -741,7 +741,7 @@ void I3C_ITConfig(uint32_t I3C_IT, FunctionalState NewState)
 ITStatus I3C_GetITStatus(uint32_t I3C_IT)
 {
     ITStatus bitstatus    = RESET;
-    uint32_t enablestatus = I3C->INTENR;
+    uint32_t enablestatus = I3C->INTENR & I3C_IT;
 
     if (((I3C->EVR & I3C_IT) != (uint32_t)RESET) && enablestatus)
     {

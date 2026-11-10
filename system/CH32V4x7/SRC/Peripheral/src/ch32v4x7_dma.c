@@ -70,103 +70,99 @@ void DMA_DeInit(DMA_Channel_TypeDef *DMAy_Channelx)
     DMAy_Channelx->MADDR = 0;
     if(DMAy_Channelx == DMA1_Channel1)
     {
-        DMA1->INTFCR |= DMA1_Channel1_IT_Mask;
+        DMA1->INTFCR = DMA1_Channel1_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel2)
     {
-        DMA1->INTFCR |= DMA1_Channel2_IT_Mask;
+        DMA1->INTFCR = DMA1_Channel2_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel3)
     {
-        DMA1->INTFCR |= DMA1_Channel3_IT_Mask;
+        DMA1->INTFCR = DMA1_Channel3_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel4)
     {
-        DMA1->INTFCR |= DMA1_Channel4_IT_Mask;
+        DMA1->INTFCR = DMA1_Channel4_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel5)
     {
-        DMA1->INTFCR |= DMA1_Channel5_IT_Mask;
+        DMA1->INTFCR = DMA1_Channel5_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel6)
     {
-        DMA1->INTFCR |= DMA1_Channel6_IT_Mask;
+        DMA1->INTFCR = DMA1_Channel6_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel7)
     {
-        DMA1->INTFCR |= DMA1_Channel7_IT_Mask;
-    }
-    else if(DMAy_Channelx == DMA1_Channel7)
-    {
-        DMA1->INTFCR |= DMA1_Channel7_IT_Mask;
+        DMA1->INTFCR = DMA1_Channel7_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel8)
     {
-        DMA1->INTFCR |= DMA1_Channel8_IT_Mask;
+        DMA1_EXTEN->INTFCR = DMA1_Channel8_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel9)
     {
-        DMA1->INTFCR |= DMA1_Channel9_IT_Mask;
+        DMA1_EXTEN->INTFCR = DMA1_Channel9_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel10)
     {
-        DMA1->INTFCR |= DMA1_Channel10_IT_Mask;
+        DMA1_EXTEN->INTFCR = DMA1_Channel10_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel11)
     {
-        DMA1->INTFCR |= DMA1_Channel11_IT_Mask;
+        DMA1_EXTEN->INTFCR = DMA1_Channel11_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel12)
     {
-        DMA1->INTFCR |= DMA1_Channel12_IT_Mask;
+        DMA1_EXTEN->INTFCR = DMA1_Channel12_IT_Mask;
     }
     else if(DMAy_Channelx == DMA1_Channel13)
     {
-        DMA1->INTFCR |= DMA1_Channel13_IT_Mask;
+        DMA1_EXTEN->INTFCR = DMA1_Channel13_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel1)
     {
-        DMA2->INTFCR |= DMA2_Channel1_IT_Mask;
+        DMA2->INTFCR = DMA2_Channel1_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel2)
     {
-        DMA2->INTFCR |= DMA2_Channel2_IT_Mask;
+        DMA2->INTFCR = DMA2_Channel2_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel3)
     {
-        DMA2->INTFCR |= DMA2_Channel3_IT_Mask;
+        DMA2->INTFCR = DMA2_Channel3_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel4)
     {
-        DMA2->INTFCR |= DMA2_Channel4_IT_Mask;
+        DMA2->INTFCR = DMA2_Channel4_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel5)
     {
-        DMA2->INTFCR |= DMA2_Channel5_IT_Mask;
+        DMA2->INTFCR = DMA2_Channel5_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel6)
     {
-        DMA2->INTFCR |= DMA2_Channel6_IT_Mask;
+        DMA2->INTFCR = DMA2_Channel6_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel7)
     {
-        DMA2->INTFCR |= DMA2_Channel7_IT_Mask;
+        DMA2->INTFCR = DMA2_Channel7_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel8)
     {
-        DMA2_EXTEN->INTFCR |= DMA2_Channel8_IT_Mask;
+        DMA2_EXTEN->INTFCR = DMA2_Channel8_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel9)
     {
-        DMA2_EXTEN->INTFCR |= DMA2_Channel9_IT_Mask;
+        DMA2_EXTEN->INTFCR = DMA2_Channel9_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel10)
     {
-        DMA2_EXTEN->INTFCR |= DMA2_Channel10_IT_Mask;
+        DMA2_EXTEN->INTFCR = DMA2_Channel10_IT_Mask;
     }
     else if(DMAy_Channelx == DMA2_Channel11)
     {
-        DMA2_EXTEN->INTFCR |= DMA2_Channel11_IT_Mask;
+        DMA2_EXTEN->INTFCR = DMA2_Channel11_IT_Mask;
     }
 }
 
@@ -560,15 +556,15 @@ void DMA_ClearFlag(uint32_t DMAy_FLAG)
 {
     if((DMAy_FLAG & FLAG_Mask) == FLAG_Mask)
     {
-        DMA2->INTFCR = DMAy_FLAG;
+        DMA2->INTFCR = DMAy_FLAG & 0x0FFFFFFF;
     }
     else if((DMAy_FLAG & DMA2_EXTEN_FLAG_Mask) == DMA2_EXTEN_FLAG_Mask)
     {
-        DMA2_EXTEN->INTFCR = DMAy_FLAG;
+        DMA2_EXTEN->INTFCR = DMAy_FLAG & 0x00FFFFFF;
     }
     else if((DMAy_FLAG & DMA1_EXTEN_FLAG_Mask) == DMA1_EXTEN_FLAG_Mask)
     {
-        DMA1_EXTEN->INTFCR = DMAy_FLAG;
+        DMA1_EXTEN->INTFCR = DMAy_FLAG & 0x00FFFFFF;
     }
     else
     {
@@ -826,15 +822,15 @@ void DMA_ClearITPendingBit(uint32_t DMAy_IT)
 {
     if((DMAy_IT & FLAG_Mask) == FLAG_Mask)
     {
-        DMA2->INTFCR = DMAy_IT;
+        DMA2->INTFCR = DMAy_IT & 0x0FFFFFFF;
     }
     else if((DMAy_IT & DMA2_EXTEN_FLAG_Mask) == DMA2_EXTEN_FLAG_Mask)
     {
-        DMA2_EXTEN->INTFCR = DMAy_IT;
+        DMA2_EXTEN->INTFCR = DMAy_IT & 0x00FFFFFF;
     }
     else if((DMAy_IT & DMA1_EXTEN_FLAG_Mask) == DMA1_EXTEN_FLAG_Mask)
     {
-        DMA1_EXTEN->INTFCR = DMAy_IT;
+        DMA1_EXTEN->INTFCR = DMAy_IT & 0x00FFFFFF;
     }
     else
     {

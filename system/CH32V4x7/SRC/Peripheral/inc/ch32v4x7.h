@@ -3132,10 +3132,10 @@ typedef struct
 #define  DMA_TCIF7                                   ((uint32_t)0x02000000)        /* Channel 7 Transfer Complete flag */
 #define  DMA_HTIF7                                   ((uint32_t)0x04000000)        /* Channel 7 Half Transfer flag */
 #define  DMA_TEIF7                                   ((uint32_t)0x08000000)        /* Channel 7 Transfer Error flag */
-#define  DMA_GIF8                                    ((uint32_t)0x10000000)        /* Channel 8 Global interrupt flag */
-#define  DMA_TCIF8                                   ((uint32_t)0x20000000)        /* Channel 8 Transfer Complete flag */
-#define  DMA_HTIF8                                   ((uint32_t)0x40000000)        /* Channel 8 Half Transfer flag */
-#define  DMA_TEIF8                                   ((uint32_t)0x80000000)        /* Channel 8 Transfer Error flag */
+#define  DMA_GIF8                                    ((uint32_t)0x00000001)        /* Channel 8 Global interrupt flag */
+#define  DMA_TCIF8                                   ((uint32_t)0x00000002)        /* Channel 8 Transfer Complete flag */
+#define  DMA_HTIF8                                   ((uint32_t)0x00000004)        /* Channel 8 Half Transfer flag */
+#define  DMA_TEIF8                                   ((uint32_t)0x00000008)        /* Channel 8 Transfer Error flag */
 
 /*******************  Bit definition for DMA_INTFCR register  *******************/
 #define  DMA_CGIF1                                   ((uint32_t)0x00000001)        /* Channel 1 Global interrupt clear */
@@ -3166,10 +3166,10 @@ typedef struct
 #define  DMA_CTCIF7                                  ((uint32_t)0x02000000)        /* Channel 7 Transfer Complete clear */
 #define  DMA_CHTIF7                                  ((uint32_t)0x04000000)        /* Channel 7 Half Transfer clear */
 #define  DMA_CTEIF7                                  ((uint32_t)0x08000000)        /* Channel 7 Transfer Error clear */
-#define  DMA_CGIF8                                   ((uint32_t)0x10000000)        /* Channel 8 Global interrupt clear */
-#define  DMA_CTCIF8                                  ((uint32_t)0x20000000)        /* Channel 8 Transfer Complete clear */
-#define  DMA_CHTIF8                                  ((uint32_t)0x40000000)        /* Channel 8 Half Transfer clear */
-#define  DMA_CTEIF8                                  ((uint32_t)0x80000000)        /* Channel 8 Transfer Error clear */
+#define  DMA_CGIF8                                   ((uint32_t)0x00000001)        /* Channel 8 Global interrupt clear */
+#define  DMA_CTCIF8                                  ((uint32_t)0x00000002)        /* Channel 8 Transfer Complete clear */
+#define  DMA_CHTIF8                                  ((uint32_t)0x00000004)        /* Channel 8 Half Transfer clear */
+#define  DMA_CTEIF8                                  ((uint32_t)0x00000008)        /* Channel 8 Transfer Error clear */
 
 /*******************  Bit definition for DMA_CFGR1 register  *******************/
 #define  DMA_CFGR1_EN                                ((uint16_t)0x0001)            /* Channel enable*/
@@ -3601,48 +3601,48 @@ typedef struct
 #define  DMA_MADDR13_MA                              ((uint32_t)0xFFFFFFFF)        /* Memory Address */
 
 /******************  Bit definition for DMA_EXTEM INTFR register  *******************/
-#define  DMA_GIF9                                    ((uint32_t)0x00000001)        /* Channel 9 Global interrupt flag */
-#define  DMA_TCIF9                                   ((uint32_t)0x00000002)        /* Channel 9 Transfer Complete flag */
-#define  DMA_HTIF9                                   ((uint32_t)0x00000004)        /* Channel 9 Half Transfer flag */
-#define  DMA_TEIF9                                   ((uint32_t)0x00000008)        /* Channel 9 Transfer Error flag */
-#define  DMA_GIF10                                   ((uint32_t)0x00000010)        /* Channel 10 Global interrupt flag */
-#define  DMA_TCIF10                                  ((uint32_t)0x00000020)        /* Channel 10 Transfer Complete flag */
-#define  DMA_HTIF10                                  ((uint32_t)0x00000040)        /* Channel 10 Half Transfer flag */
-#define  DMA_TEIF10                                  ((uint32_t)0x00000080)        /* Channel 10 Transfer Error flag */
-#define  DMA_GIF11                                   ((uint32_t)0x00000100)        /* Channel 11 Global interrupt flag */
-#define  DMA_TCIF11                                  ((uint32_t)0x00000200)        /* Channel 11 Transfer Complete flag */
-#define  DMA_HTIF11                                  ((uint32_t)0x00000400)        /* Channel 11 Half Transfer flag */
-#define  DMA_TEIF11                                  ((uint32_t)0x00000800)        /* Channel 11 Transfer Error flag */
-#define  DMA_GIF12                                   ((uint32_t)0x00001000)        /* Channel 12 Global interrupt flag */
-#define  DMA_TCIF12                                  ((uint32_t)0x00002000)        /* Channel 12 Transfer Complete flag */
-#define  DMA_HTIF12                                  ((uint32_t)0x00004000)        /* Channel 12 Half Transfer flag */
-#define  DMA_TEIF12                                  ((uint32_t)0x00008000)        /* Channel 12 Transfer Error flag */
-#define  DMA_GIF13                                   ((uint32_t)0x00010000)        /* Channel 13 Global interrupt flag */
-#define  DMA_TCIF13                                  ((uint32_t)0x00020000)        /* Channel 13 Transfer Complete flag */
-#define  DMA_HTIF13                                  ((uint32_t)0x00040000)        /* Channel 13 Half Transfer flag */
-#define  DMA_TEIF13                                  ((uint32_t)0x00080000)        /* Channel 13 Transfer Error flag */
+#define  DMA_GIF9                                    ((uint32_t)0x00000010)        /* Channel 9 Global interrupt flag */
+#define  DMA_TCIF9                                   ((uint32_t)0x00000020)        /* Channel 9 Transfer Complete flag */
+#define  DMA_HTIF9                                   ((uint32_t)0x00000040)        /* Channel 9 Half Transfer flag */
+#define  DMA_TEIF9                                   ((uint32_t)0x00000080)        /* Channel 9 Transfer Error flag */
+#define  DMA_GIF10                                   ((uint32_t)0x00000100)        /* Channel 10 Global interrupt flag */
+#define  DMA_TCIF10                                  ((uint32_t)0x00000200)        /* Channel 10 Transfer Complete flag */
+#define  DMA_HTIF10                                  ((uint32_t)0x00000400)        /* Channel 10 Half Transfer flag */
+#define  DMA_TEIF10                                  ((uint32_t)0x00000800)        /* Channel 10 Transfer Error flag */
+#define  DMA_GIF11                                   ((uint32_t)0x00001000)        /* Channel 11 Global interrupt flag */
+#define  DMA_TCIF11                                  ((uint32_t)0x00002000)        /* Channel 11 Transfer Complete flag */
+#define  DMA_HTIF11                                  ((uint32_t)0x00004000)        /* Channel 11 Half Transfer flag */
+#define  DMA_TEIF11                                  ((uint32_t)0x00008000)        /* Channel 11 Transfer Error flag */
+#define  DMA_GIF12                                   ((uint32_t)0x00010000)        /* Channel 12 Global interrupt flag */
+#define  DMA_TCIF12                                  ((uint32_t)0x00020000)        /* Channel 12 Transfer Complete flag */
+#define  DMA_HTIF12                                  ((uint32_t)0x00040000)        /* Channel 12 Half Transfer flag */
+#define  DMA_TEIF12                                  ((uint32_t)0x00080000)        /* Channel 12 Transfer Error flag */
+#define  DMA_GIF13                                   ((uint32_t)0x00100000)        /* Channel 13 Global interrupt flag */
+#define  DMA_TCIF13                                  ((uint32_t)0x00200000)        /* Channel 13 Transfer Complete flag */
+#define  DMA_HTIF13                                  ((uint32_t)0x00400000)        /* Channel 13 Half Transfer flag */
+#define  DMA_TEIF13                                  ((uint32_t)0x00800000)        /* Channel 13 Transfer Error flag */
 
 /*******************  Bit definition for DMA_EXTEM INTFCR register  *******************/
-#define  DMA_CGIF9                                   ((uint32_t)0x00000001)        /* Channel 9 Global interrupt clear */
-#define  DMA_CTCIF9                                  ((uint32_t)0x00000002)        /* Channel 9 Transfer Complete clear */
-#define  DMA_CHTIF9                                  ((uint32_t)0x00000004)        /* Channel 9 Half Transfer clear */
-#define  DMA_CTEIF9                                  ((uint32_t)0x00000008)        /* Channel 9 Transfer Error clear */
-#define  DMA_CGIF10                                  ((uint32_t)0x00000010)        /* Channel 10 Global interrupt clear */
-#define  DMA_CTCIF10                                 ((uint32_t)0x00000020)        /* Channel 10 Transfer Complete clear */
-#define  DMA_CHTIF10                                 ((uint32_t)0x00000040)        /* Channel 10 Half Transfer clear */
-#define  DMA_CTEIF10                                 ((uint32_t)0x00000080)        /* Channel 10 Transfer Error clear */
-#define  DMA_CGIF11                                  ((uint32_t)0x00000100)        /* Channel 11 Global interrupt clear */
-#define  DMA_CTCIF11                                 ((uint32_t)0x00000200)        /* Channel 11 Transfer Complete clear */
-#define  DMA_CHTIF11                                 ((uint32_t)0x00000400)        /* Channel 11 Half Transfer clear */
-#define  DMA_CTEIF11                                 ((uint32_t)0x00000800)        /* Channel 11 Transfer Error clear */
-#define  DMA_CGIF12                                  ((uint32_t)0x00001000)        /* Channel 12 Global interrupt clear */
-#define  DMA_CTCIF12                                 ((uint32_t)0x00002000)        /* Channel 12 Transfer Complete clear */
-#define  DMA_CHTIF12                                 ((uint32_t)0x00004000)        /* Channel 12 Half Transfer clear */
-#define  DMA_CTEIF12                                 ((uint32_t)0x00008000)        /* Channel 12 Transfer Error clear */
-#define  DMA_CGIF13                                  ((uint32_t)0x00010000)        /* Channel 13 Global interrupt clear */
-#define  DMA_CTCIF13                                 ((uint32_t)0x00020000)        /* Channel 13 Transfer Complete clear */
-#define  DMA_CHTIF13                                 ((uint32_t)0x00040000)        /* Channel 13 Half Transfer clear */
-#define  DMA_CTEIF13                                 ((uint32_t)0x00080000)        /* Channel 13 Transfer Error clear */
+#define  DMA_CGIF9                                   ((uint32_t)0x00000010)        /* Channel 9 Global interrupt clear */
+#define  DMA_CTCIF9                                  ((uint32_t)0x00000020)        /* Channel 9 Transfer Complete clear */
+#define  DMA_CHTIF9                                  ((uint32_t)0x00000040)        /* Channel 9 Half Transfer clear */
+#define  DMA_CTEIF9                                  ((uint32_t)0x00000080)        /* Channel 9 Transfer Error clear */
+#define  DMA_CGIF10                                  ((uint32_t)0x00000100)        /* Channel 10 Global interrupt clear */
+#define  DMA_CTCIF10                                 ((uint32_t)0x00000200)        /* Channel 10 Transfer Complete clear */
+#define  DMA_CHTIF10                                 ((uint32_t)0x00000400)        /* Channel 10 Half Transfer clear */
+#define  DMA_CTEIF10                                 ((uint32_t)0x00000800)        /* Channel 10 Transfer Error clear */
+#define  DMA_CGIF11                                  ((uint32_t)0x00001000)        /* Channel 11 Global interrupt clear */
+#define  DMA_CTCIF11                                 ((uint32_t)0x00002000)        /* Channel 11 Transfer Complete clear */
+#define  DMA_CHTIF11                                 ((uint32_t)0x00004000)        /* Channel 11 Half Transfer clear */
+#define  DMA_CTEIF11                                 ((uint32_t)0x00008000)        /* Channel 11 Transfer Error clear */
+#define  DMA_CGIF12                                  ((uint32_t)0x00010000)        /* Channel 12 Global interrupt clear */
+#define  DMA_CTCIF12                                 ((uint32_t)0x00020000)        /* Channel 12 Transfer Complete clear */
+#define  DMA_CHTIF12                                 ((uint32_t)0x00040000)        /* Channel 12 Half Transfer clear */
+#define  DMA_CTEIF12                                 ((uint32_t)0x00080000)        /* Channel 12 Transfer Error clear */
+#define  DMA_CGIF13                                  ((uint32_t)0x00100000)        /* Channel 13 Global interrupt clear */
+#define  DMA_CTCIF13                                 ((uint32_t)0x00200000)        /* Channel 13 Transfer Complete clear */
+#define  DMA_CHTIF13                                 ((uint32_t)0x00400000)        /* Channel 13 Half Transfer clear */
+#define  DMA_CTEIF13                                 ((uint32_t)0x00800000)        /* Channel 13 Transfer Error clear */
 
 /******************************************************************************/
 /*                    External Interrupt/Event Controller                     */

@@ -1471,7 +1471,7 @@ void ETH_DMAClearITPendingBit(uint32_t ETH_DMA_IT)
  */
 uint32_t ETH_GetTransmitProcessState(void)
 {
-    return ((uint32_t)(ETH->DMASR & ETH_DMASR_TS));
+    return ((uint32_t)(ETH->DMASR & ETH_DMASR_TPS));
 }
 
 /*********************************************************************
@@ -1489,7 +1489,7 @@ uint32_t ETH_GetTransmitProcessState(void)
  */
 uint32_t ETH_GetReceiveProcessState(void)
 {
-    return ((uint32_t)(ETH->DMASR & ETH_DMASR_RS));
+    return ((uint32_t)(ETH->DMASR & ETH_DMASR_RPS));
 }
 
 /*********************************************************************
@@ -2008,7 +2008,8 @@ ITStatus ETH_GetMMCITStatus(uint32_t ETH_MMC_IT)
 
     if((ETH_MMC_IT & (uint32_t)0x10000000) != (uint32_t)RESET)
     {
-        if((((ETH->MMCRIR & ETH_MMC_IT) != (uint32_t)RESET)) && ((ETH->MMCRIMR & ETH_MMC_IT) != (uint32_t)RESET))
+        ETH_MMC_IT &= 0xEFFFFFFF;
+        if(((ETH->MMCRIR & ETH_MMC_IT) != (uint32_t)RESET) && ((ETH->MMCRIMR & ETH_MMC_IT) == (uint32_t)RESET))
         {
             bitstatus = SET;
         }
@@ -2019,7 +2020,7 @@ ITStatus ETH_GetMMCITStatus(uint32_t ETH_MMC_IT)
     }
     else
     {
-        if((((ETH->MMCTIR & ETH_MMC_IT) != (uint32_t)RESET)) && ((ETH->MMCRIMR & ETH_MMC_IT) != (uint32_t)RESET))
+        if(((ETH->MMCTIR & ETH_MMC_IT) != (uint32_t)RESET) && ((ETH->MMCTIMR & ETH_MMC_IT) == (uint32_t)RESET))
         {
             bitstatus = SET;
         }
@@ -2386,7 +2387,7 @@ uint32_t ETH_HandlePTPTxPkt(uint8_t *ppkt, uint16_t FrameLength, uint32_t *PTPTx
         timeout++;
     } while(!(DMATxDescToSet->Status & ETH_DMATxDesc_TTSS) && (timeout < 0xFFFF));
 
-    if(timeout == PHY_READ_TO)
+    if((DMATxDescToSet->Status & ETH_DMATxDesc_TTSS) == (uint32_t)RESET)
     {
         return ETH_ERROR;
     }

@@ -106,7 +106,7 @@ typedef struct
 #define DVP_FLAG_FRM_DONE              ((uint8_t)0x04)
 #define DVP_FLAG_FIFO_OV               ((uint8_t)0x08)
 #define DVP_FLAG_STP_FRM               ((uint8_t)0x10)
-#define DVP_FLAG_FIFO_RDY              ((uint8_t)0x80)
+#define DVP_FLAG_FIFO_RDY              ((uint8_t)0x81)
 #define DVP_FLAG_FIFO_FULL             ((uint8_t)0x82)
 #define DVP_FLAG_FIFO_OV_1             ((uint8_t)0x84)
 

@@ -171,6 +171,7 @@ void PSRAM_Refresh_Cmd_Set(uint8_t CMD);
 void PSRAM_Global_RST_Cmd_Set(uint8_t CMD);
 void PSRAM_WRReg_Cmd_Set(uint8_t CMD);
 void PSRAM_RDReg_Cmd_Set(uint8_t CMD);
+void PSRAM_Exti_LP(FunctionalState NewState);
 #ifdef __cplusplus
 }
 #endif

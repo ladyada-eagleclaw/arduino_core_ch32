@@ -99,7 +99,7 @@ void DBGMCU_Config(uint32_t DBGMCU_Periph, FunctionalState NewState)
 
     if(NewState != DISABLE)
     {
-        __set_DEBUG_CR(DBGMCU_Periph);
+        __set_DEBUG_CR(__get_DEBUG_CR() | DBGMCU_Periph);
     }
     else
     {

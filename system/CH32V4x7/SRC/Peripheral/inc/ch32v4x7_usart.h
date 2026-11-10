@@ -192,6 +192,7 @@ FlagStatus USART_GetFlagStatus(USART_TypeDef* USARTx, uint16_t USART_FLAG);
 void USART_ClearFlag(USART_TypeDef* USARTx, uint16_t USART_FLAG);
 ITStatus USART_GetITStatus(USART_TypeDef* USARTx, uint16_t USART_IT);
 void USART_ClearITPendingBit(USART_TypeDef* USARTx, uint16_t USART_IT);
+void USART_MARKorSPACE_Config(USART_TypeDef* USARTx, uint16_t MARKorSPACE_Mode);
 
 #ifdef __cplusplus
 }

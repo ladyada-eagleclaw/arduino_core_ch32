@@ -86,13 +86,14 @@ void IWDG_ReloadCounter(void)
  * @fn      IWDG_Enable
  *
  * @brief   Enables IWDG (write access to IWDG_PSCR and IWDG_RLDR registers disabled).
+ *          Blocks until the LSI oscillator is ready; there is no timeout.
  *
  * @return  none
  */
 void IWDG_Enable(void)
 {
     IWDG->CTLR = CTLR_KEY_Enable;
-    while((RCC->RSTSCKR & 0x2)==RESET);
+    while((RCC->RSTSCKR & RCC_LSIRDY)==RESET);
 }
 
 /*********************************************************************

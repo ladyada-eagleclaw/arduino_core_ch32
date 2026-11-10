@@ -38,9 +38,12 @@ void PSRAMDeInit()
  */
 void PSRAMInit(PSRAMInitTypeDef *PSRAMInitStruct)
 {
-    PSRAM->CTLR=(uint32_t)PSRAMInitStruct->PSRAM_cfifo|
-                PSRAMInitStruct->PSRAM_cap_cfg|
-                PSRAMInitStruct->PSRAM_exti_lpmd;
+    uint32_t ctlr = PSRAMInitStruct->PSRAM_cfifo | PSRAMInitStruct->PSRAM_cap_cfg;
+    if(PSRAMInitStruct->PSRAM_exti_lpmd != DISABLE)
+    {
+        ctlr |= PSRAM_EXIT_LPMD;
+    }
+    PSRAM->CTLR = ctlr;
     PSRAM->TIMING=(uint32_t)PSRAMInitStruct->PSRAMTimingStruct->PSRAM_trc|
                     ((PSRAMInitStruct->PSRAMTimingStruct->PSRAM_tcph)<<16)|
                     ((PSRAMInitStruct->PSRAMTimingStruct->PSRAM_txlpd)<<24);   

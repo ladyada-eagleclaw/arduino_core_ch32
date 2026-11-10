@@ -1208,11 +1208,11 @@ void RCC_UTMI2cmd(FunctionalState NewState)
 {
     if(NewState != DISABLE)
     {
-        RCC->CFGR2 |= (1 << 31);
+        RCC->CFGR2 |= (1U << 31);
     }
     else
     {
-        RCC->CFGR2 &= ~(1 << 31);
+        RCC->CFGR2 &= ~(1U << 31);
     }
 }
 
