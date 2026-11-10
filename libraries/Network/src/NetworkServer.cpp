@@ -9,7 +9,10 @@ NetworkServer::NetworkServer(const IPAddress &addr, uint16_t port,
                              uint8_t max_clients)
     : _addr((uint32_t)addr), _port(port), _max(max_clients ? max_clients : 1) {}
 
-NetworkServer::~NetworkServer() { end(); }
+NetworkServer::~NetworkServer() {
+  end();
+  delete[] _pending;
+}
 
 void NetworkServer::begin(uint16_t port) { begin(port, 1); }
 
