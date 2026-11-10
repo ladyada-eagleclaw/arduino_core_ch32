@@ -219,6 +219,8 @@ void timerTick() { ticks++; }
 
 void runTests() {
   SerialUSB.print("\n\rAdafruit Metro CH32V4x7 hardware test\n\r");
+  SerialUSB.print("CPU Hz="); SerialUSB.print(SystemCoreClock);
+  SerialUSB.print(" F_CPU="); SerialUSB.print(F_CPU); SerialUSB.print("\n\r");
   SerialUSB.flush();
   releaseHeaders();
   for (unsigned i = 0; i < 10; i++) {
@@ -520,15 +522,33 @@ void testSDFile() {
 
 void testI2C() {
   stemma.begin();
-  unsigned found = 0;
-  for (uint8_t address = 8; address < 120; address++) {
-    stemma.beginTransmission(address);
-    if (!stemma.endTransmission()) {
-      SerialUSB.print("I2C address 0x"); SerialUSB.print(address, HEX);
-      SerialUSB.print("\n\r"); found++;
-    }
-  }
-  result("STEMMA I2C responds (software controller)", found > 0);
+  SerialUSB.print("STEMMA hardware I2C: PB11 SDA, PB10 SCL, 400 kHz setting.\n\r");
+  // The I3C legacy-I2C mode requires a nonempty, STOP-terminated message.
+  // Test rejection instead of using a scanner that sends zero-byte writes.
+  stemma.beginTransmission(0x2b);
+  result("I3C rejects zero-byte probes", stemma.endTransmission() == 4);
+  stemma.beginTransmission(0x2b);
+  stemma.write(0x36); stemma.write(0x5b);
+  result("I3C rejects writes without STOP", stemma.endTransmission(false) == 4);
+  result("I3C rejects reads without STOP",
+         stemma.requestFrom((uint8_t)0x2b, (uint8_t)18, (uint8_t)false) == 0);
+  result("I3C rejects combined register reads",
+         stemma.requestFrom((uint8_t)0x2b, (uint8_t)18, (uint32_t)0x365b,
+                           (uint8_t)2, (uint8_t)true) == 0);
+  stemma.setClock(100000);
+  stemma.beginTransmission(0x2b);
+  stemma.write(0x36); stemma.write(0x5b);
+  result("I3C rejects unsupported 100 kHz", stemma.endTransmission() == 4);
+  stemma.setClock(400000);
+  stemma.beginTransmission(0x2a); // No device at this address on this fixture.
+  stemma.write(0x36); stemma.write(0x5b);
+  result("I3C reports address NACK", stemma.endTransmission() == 2);
+  TwoWire second(PIN_WIRE_SDA, PIN_WIRE_SCL);
+  second.begin();
+  second.beginTransmission(0x2b);
+  second.write(0x36); second.write(0x5b);
+  result("I3C prevents a second instance from taking the bus", second.endTransmission() == 4);
+  second.end();
   testSensor();
   stemma.end();
   SerialUSB.print("I2C test finished.\n\r");
@@ -547,6 +567,12 @@ void testSensor() {
   SerialUSB.print(" serial=");
   for (uint8_t value : serial) { SerialUSB.print(value, HEX); SerialUSB.print(' '); }
   SerialUSB.print("\n\r");
+  for (unsigned sample = 0; sample < 100; sample++) {
+    error = sensor.readProductInfo(product, serial, sizeof(serial));
+    if (error || product != 0x08030103) break;
+  }
+  result("STC42 100 consecutive identity/CRC reads", error == 0 && product == 0x08030103);
+  if (error) return;
   error = sensor.compensateHumidityWithSht41();
   if (!error) error = sensor.compensateTemperatureWithSht41();
   if (!error) error = sensor.startConcentrationMeasurement(1000);

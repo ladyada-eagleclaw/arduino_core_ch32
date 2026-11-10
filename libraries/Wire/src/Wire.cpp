@@ -87,11 +87,15 @@ void TwoWire::begin(uint8_t address, bool generalCall, bool NoStretchMode)
 
   _i2c.NoStretchMode = (NoStretchMode == true) ? 1 : 0;
 
-#if !defined(WIRE_SOFTWARE)
+#if !defined(WIRE_SOFTWARE) && !defined(WIRE_I3C)
   recoverBus(); // in case I2C bus (device) is stuck after a reset for example
 #endif
 
+#if defined(WIRE_I3C)
+  i2c_custom_init(&_i2c, 400000, I2C_AcknowledgedAddress_7bit, ownAddress);
+#else
   i2c_custom_init(&_i2c, 100000, I2C_AcknowledgedAddress_7bit, ownAddress);
+#endif
 
   if (_i2c.isMaster == 0) 
   {
@@ -134,7 +138,14 @@ void TwoWire::setClock(uint32_t frequency)
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity,
                              uint32_t iaddress, uint8_t isize,
                              uint8_t sendStop) {
-#if !defined(WIRE_SOFTWARE)
+#if defined(WIRE_I3C)
+  // Legacy I2C on this peripheral cannot hold the bus for another message.
+  // Reject combined register reads before either phase touches the bus.
+  if (!sendStop || isize) {
+    rxBufferIndex = rxBufferLength = 0;
+    return 0;
+  }
+#elif !defined(WIRE_SOFTWARE)
   // The hardware backend does not yet support reads without STOP.
   (void)sendStop;
 #endif

@@ -2,7 +2,8 @@
 
 These variants target the rev A PCB with a separate Ethernet transformer and
 RJ45 jack. Both use the same pin numbering and a 25 MHz crystal. CPU and bus
-clocks are 200 MHz.
+clocks default to 100 MHz. The **Clock select** menu also offers 200 MHz.
+Both options retain the 200 MHz system PLL.
 
 | Arduino pins | MCU pins, in the same order |
 | --- | --- |
@@ -16,8 +17,19 @@ clocks are 200 MHz.
 `Serial` / `SerialUSB` is USB CDC; `Serial1` uses D0 RX and D1 TX.
 The USER button is active low. A0 supports DAC output. Pin remapping is selected
 through the variant's peripheral tables; the header UART uses USART1's PB6/PB7
-remap. `Wire` uses an open-drain software controller because PB10/PB11 are I3C
-pads on this family. External I2C pull-ups are required; controller mode only.
+remap. `Wire` uses the I3C hardware controller in legacy I2C mode on PB10/PB11.
+External I2C pull-ups are required; controller mode only. The default is the
+400 kHz setting at 100 MHz HCLK; other clock settings are currently rejected.
+Select **100 MHz (hardware I2C)** to use `Wire`. At the 200 MHz CPU setting,
+the controller cannot meet the Fast-mode SCL-low minimum, so transfers fail.
+
+This controller's legacy mode requires at least one data byte and a STOP after
+every message. `endTransmission(false)` and zero-byte scanner probes return 4;
+reads without STOP and combined internal-address reads return zero bytes. Use
+separate write-with-STOP and read-with-STOP calls for devices that permit them.
+The driver never substitutes a STOP or dummy data for an unsupported request.
+After an unsupported `setClock()` value, transfers fail until
+`Wire.setClock(400000)` or `Wire.begin()` restores the supported configuration.
 
 ## TinyUF2
 

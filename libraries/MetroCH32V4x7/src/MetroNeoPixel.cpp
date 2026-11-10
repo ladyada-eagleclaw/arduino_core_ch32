@@ -23,8 +23,8 @@ void metroNeoPixelWriteOnPin(uint16_t pin, uint8_t red, uint8_t green,
   const uint32_t pinMask = CH_GPIO_PIN(name);
   delayMicroseconds(300);
   const uint8_t colors[] = {green, red, blue};
-  // Budget for the GPIO write and polling-loop overhead. At the Metro's
-  // 200 MHz clock, timer/DMA loopback measures the resulting pad waveform.
+  // Budget for the GPIO write and polling-loop overhead. Timer/DMA loopback
+  // verifies the resulting pad waveform at both 100 and 200 MHz.
   const uint32_t ticksPerMicrosecond = F_CPU / 1000000;
   const uint32_t period = ticksPerMicrosecond * 1150 / 1000;
   const uint32_t zeroHigh = ticksPerMicrosecond * 250 / 1000;

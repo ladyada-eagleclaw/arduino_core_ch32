@@ -54,15 +54,16 @@ int MetroPSRAM::readModeRegister(uint8_t address) {
 
 bool MetroPSRAM::begin() {
   _ready = false;
-#if defined(CH32V467) && F_CPU == 200000000L
+#if defined(CH32V467) && (F_CPU == 200000000L || F_CPU == 100000000L)
   const uint32_t chip = *(volatile uint32_t *)0x1ffff704u;
   if ((chip & 0xffff000fu) != 0x46750002u)
     return false;
-  if (SystemClock != 200000000 || SystemCoreClock != 200000000)
+  if (SystemClock != 200000000 || SystemCoreClock != F_CPU)
     return false;
   RCC_PB1PeriphClockCmd(RCC_PB1Periph_PWR, ENABLE);
   PWR_VDD18LevelConfig(PWR_VDD18_Level1);
-  // WCH's 200 MHz profile uses SYSCLK=HCLK=200 MHz, not SYSCLK=400 MHz.
+  // Both Metro profiles retain the 200 MHz system PLL. The 100 MHz option
+  // divides HCLK; keep the memory's conservative timing and latency settings.
   RCC->HBPCENR |= ramClock;
   RCC->HBRSTR |= ramClock;
   RCC->HBRSTR &= ~ramClock;

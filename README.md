@@ -77,7 +77,9 @@ If your board variant doesn't define `LED_BUILTIN`, substitute a GPIO pin that h
 | CH32V4x7 | Adafruit Metro CH32V467 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅¹ | |
 | CH32X035 | CH32X035G8U        | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | | ✅ | |
 
-¹ Metro uses a software I2C controller on its PB10/PB11 connector pads.
+¹ Metro uses the I3C hardware controller's legacy I2C mode on PB10/PB11.
+Only nonempty, STOP-terminated transfers are supported, at the 400 kHz setting
+with the default 100 MHz CPU option. Hardware `Wire` is disabled at 200 MHz.
 The CH32V407 variant also builds; its physical validation is pending.
 See the [Metro pin map and TinyUF2 upload instructions](variants/CH32V4x7/ADAFRUIT_METRO/README.md).
 

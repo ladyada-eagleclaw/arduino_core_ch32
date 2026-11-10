@@ -68,6 +68,28 @@ Host interfaces:
 After an aborted streaming test, restart the sketch before beginning a new
 sequence so queued bytes from the interrupted stream cannot contaminate it.
 
+## Hardware I2C and 100 MHz option, 2026-11-10
+
+Physical CH32V467 with 200 MHz SYSCLK / 100 MHz HCLK and the hardware I3C
+legacy-I2C backend:
+
+- STC42 product 0x08030103, 100 consecutive identity/CRC reads, and three
+  measurement/CRC reads passed. Unsupported requests and absent-address NACK
+  handling passed; a second Wire instance could not take over the controller.
+- SCL sampling with the CPU timer measured approximately 1.54 us low and
+  1.06 us high (385 kHz). The configured periods are 1.5 us / 1.1 us.
+  At 200 MHz HCLK, the 8-bit low-period field cannot reach the 1.3 us minimum;
+  hardware Wire is therefore disabled at that CPU setting.
+- GPIO, EXTI, UART, SPI, ADC/DAC, all 14 PWM routes, TIM6, full 4 MiB PSRAM
+  patterns and sub-word accesses, SDIO one/four-bit reads, the 32 KiB SD-file
+  round trip, external-flash reads, and Ethernet DHCP/DNS/HTTP passed.
+- NeoPixel DMA capture passed at 290 ns / 770 ns HIGH, all 24 bits per frame.
+- USB CDC echoed 65536 bytes exactly with concurrent host reads/writes.
+  A write-all-before-read host test hit backpressure; that attempt was not a
+  completed echo test. TinyUF2 entry/upload and application reconnect passed.
+- Both Metro variants build at 100 and 200 MHz. The CH32V407 still needs a
+  physical check of this community-core configuration.
+
 ## Bench evidence, 2026-11-09
 
 Physical CH32V467, community core with WCH GCC 8.2.0 and 200 MHz SYSCLK/HCLK:

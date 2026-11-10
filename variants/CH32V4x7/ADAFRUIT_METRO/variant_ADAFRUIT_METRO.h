@@ -80,7 +80,7 @@
 #define TIMER_TONE TIM6
 #define TIMER_SERVO TIM7
 
-// PB10/PB11 belong to I3C. Wire uses the software controller on these pads.
+// PB10/PB11 use the I3C hardware controller in legacy I2C mode.
 // PD8/VDD18 is connected to supply capacitors and is deliberately not exposed.
 #if defined(CH32V467)
 #define USB_PRODUCT "Adafruit Metro CH32V467"
