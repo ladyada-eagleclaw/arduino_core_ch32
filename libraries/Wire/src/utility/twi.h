@@ -108,6 +108,9 @@ struct i2c_s {
   uint8_t isMaster;
   uint8_t generalCall;
   uint8_t NoStretchMode;
+#if defined(WIRE_I3C)
+  bool i3cReady;
+#endif
 };
 
 ///@brief I2C state

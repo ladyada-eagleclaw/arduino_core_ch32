@@ -50,7 +50,11 @@ uint32_t SystemClock         = SYSCLK_350MHz_HCLK_175MHz_HSE;        /* System C
 uint32_t SystemCoreClock     = SYSCLK_350MHz_HCLK_175MHz_HSE >> 1;
 #elif defined SYSCLK_200MHz_HCLK_200MHz_HSE
 uint32_t SystemClock         = SYSCLK_200MHz_HCLK_200MHz_HSE;        /* System Clock Frequency */
+#if defined(F_CPU) && F_CPU == 100000000
+uint32_t SystemCoreClock     = SYSCLK_200MHz_HCLK_200MHz_HSE >> 1;
+#else
 uint32_t SystemCoreClock     = SYSCLK_200MHz_HCLK_200MHz_HSE;
+#endif
 #elif defined SYSCLK_480MHz_HCLK_240MHz_HSE
 uint32_t SystemClock         = SYSCLK_480MHz_HCLK_240MHz_HSE;        /* System Clock Frequency */
 uint32_t SystemCoreClock     = SYSCLK_480MHz_HCLK_240MHz_HSE >> 1;
@@ -614,14 +618,18 @@ static void SetSYSCLK_200MHz_HCLK_200MHz_HSE(void)
 
     if (HSEStatus == (uint32_t)0x01)
     {
-      /* WCH PSRAM example: SYSCLK = HCLK = 200 MHz. */
+      /* Keep the 200 MHz system PLL; optionally divide HCLK for I3C timing. */
+#if defined(F_CPU) && F_CPU == 100000000
+      RCC->CFGR0 |= (uint32_t)RCC_HPRE_DIV2;
+#else
       RCC->CFGR0 |= (uint32_t)RCC_HPRE_DIV1;
+#endif
       /* PCLK2 = HCLK */
       RCC->CFGR0 |= (uint32_t)RCC_PPRE2_DIV1;
       /* PCLK1 = HCLK */
       RCC->CFGR0 |= (uint32_t)RCC_PPRE1_DIV1;
 
-      /* PLL configuration: HCLK = (HSE * 8) / 1 = 200 MHz */
+      /* PLL configuration: SYSCLK = HSE * 8 = 200 MHz. */
       RCC->CFGR0 |= (uint32_t)(RCC_PLLSRC_HSE | RCC_PLLMULL8);
 
       /* Enable PLL */

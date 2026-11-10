@@ -15,7 +15,9 @@ Local adaptations:
   1 KiB of SRAM for hardware context stacking.
 - Spell vector CSRs numerically for the core's packaged GCC 8.2 assembler.
 - Use the SDK PSRAM example's 25 MHz HSE × 8 configuration, with SYSCLK and
-  HCLK both 200 MHz. The original default used SYSCLK 400 MHz / HCLK 200 MHz.
+  HCLK both 200 MHz. `F_CPU=100000000` selects HCLK / 2 while retaining the
+  200 MHz system PLL, allowing compliant legacy-I2C timing on I3C. The original
+  default used SYSCLK 400 MHz / HCLK 200 MHz.
 
 The Metro variants select a 32 KiB bootloader reservation. These settings
 target the RET6 devices fitted to the Metro boards.
