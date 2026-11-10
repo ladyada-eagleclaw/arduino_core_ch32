@@ -1,0 +1,138 @@
+#include "internal/NetworkCore.h"
+#include "NetworkInterface.h"
+
+#ifdef CH32RV_RNG_BASE
+#include <ch32rv_rng.h>
+#endif
+
+extern "C" void ch32rv_net_task(void);
+
+#include "lwip/init.h"
+#include "lwip/netif.h"
+#include "lwip/timeouts.h"
+
+namespace ch32rv_net {
+
+static bool started;
+static NetworkInterface *interfaces[4];
+
+/* Initialize once, when the first interface or polling call needs the stack. */
+void start() {
+  if (!started) {
+    started = true;
+    lwip_init();
+  }
+}
+
+void pump() {
+  ch32rv_net_task();
+  yield();
+}
+
+bool waitFor(bool (*done)(void *arg), void *arg, uint32_t timeoutMs) {
+  const uint32_t start = millis();
+  while (!done(arg)) {
+    if ((uint32_t)(millis() - start) >= timeoutMs) {
+      return false;
+    }
+    pump();
+  }
+  return true;
+}
+
+static NetifListener netif_listener;
+
+void setNetifListener(NetifListener listener) { netif_listener = listener; }
+
+void netifChanged(struct netif *n, bool up) {
+  if (netif_listener) {
+    netif_listener(n, up);
+  }
+}
+
+void addInterface(NetworkInterface *ifc) {
+  for (auto &slot : interfaces) {
+    if (slot == ifc) {
+      return;
+    }
+  }
+  for (auto &slot : interfaces) {
+    if (!slot) {
+      slot = ifc;
+      return;
+    }
+  }
+}
+
+void removeInterface(NetworkInterface *ifc) {
+  for (auto &slot : interfaces) {
+    if (slot == ifc) {
+      slot = nullptr;
+    }
+  }
+}
+
+NetworkInterface *firstInterface() {
+  for (auto *slot : interfaces) {
+    if (slot) {
+      return slot;
+    }
+  }
+  return nullptr;
+}
+
+} // namespace ch32rv_net
+
+/* Network.poll() and the library's blocking waits service the stack here.
+ * Reject reentry from callbacks because lwIP is not reentrant. */
+extern "C" void ch32rv_net_task(void) {
+  static bool running;
+  if (running) {
+    return;
+  }
+  running = true;
+  ch32rv_net::start();
+  for (auto *ifc : ch32rv_net::interfaces) {
+    if (ifc) {
+      ifc->poll();
+    }
+  }
+  netif_poll_all(); /* what was sent to 127.0.0.1 or an own address */
+  sys_check_timeouts();
+  running = false;
+}
+
+extern "C" uint32_t sys_now(void) { return millis(); }
+
+/* TCP's initial sequence numbers and the DHCP / DNS transaction ids: from the
+ * chip's random number generator where there is one; otherwise not
+ * cryptographic, but different on every chip and every start. A sketch can
+ * replace it. */
+extern "C" __attribute__((weak)) uint32_t network_random(void) {
+#ifdef CH32RV_RNG_BASE
+  uint32_t r;
+  if (ch32rv_rng_read(&r, sizeof r)) {
+    return r;
+  }
+#endif
+  static uint32_t state;
+  if (!state) {
+#ifdef CH32RV_ESIG_UNIID1_ADDR
+    state = *(volatile const uint32_t *)CH32RV_ESIG_UNIID1_ADDR ^
+            (*(volatile const uint32_t *)CH32RV_ESIG_UNIID2_ADDR * 2654435761u);
+#endif
+    state ^= micros() * 0x9E3779B9u;
+    if (!state) {
+      state = 0x6D2B79F5u;
+    }
+  }
+  state ^= micros();
+  if (!state) {
+    state = 0x6D2B79F5u;
+  }
+  /* xorshift32 */
+  state ^= state << 13;
+  state ^= state >> 17;
+  state ^= state << 5;
+  return state;
+}
