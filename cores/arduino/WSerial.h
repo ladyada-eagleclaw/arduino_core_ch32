@@ -7,7 +7,7 @@
 #if defined(USE_TINYUSB)
 // Discover the library for ordinary Serial sketches. Core compilation uses
 // the internal header because Arduino omits library include paths for the core.
-#if ARDUINO_LIB_DISCOVERY_PHASE
+#if CH32_LIB_DISCOVERY_PHASE
 #include <Adafruit_TinyUSB.h>
 #else
 #include "Adafruit_USBD_CDC.h"
