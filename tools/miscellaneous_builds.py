@@ -91,6 +91,20 @@ def miscellaneous_builds(package='local:ch32v'):
             for port in selected_ports:
                 yield make_build(case, processor, board, port, package, properties, prefix, series)
 
+    # Metro has fixed board definitions rather than a processor menu. Its USB
+    # echo example also checks linking applications above the TinyUF2 region.
+    for processor in ('CH32V407', 'CH32V467'):
+        name = f'{processor}_Metro-BlinkUSB'
+        yield {
+            'name': name,
+            'fqbn': f'{package}:ADAFRUIT_METRO_{processor}',
+            'sketch': 'libraries/MetroCH32V4x7/examples/BlinkUSB',
+            'build_properties': {},
+            'build_dir': f'build/Miscellaneous/{name}',
+            'ld': 'system/CH32V4x7/SRC/Ld/Link.ld',
+            'linker_vars': '__FLASH_SIZE=491520 __RAM_SIZE=203776 __FLASH_ORIGIN=0x8000',
+        }
+
 
 def make_build(case, processor, board, port, package, properties, prefix, series):
     label = case['label'].format(port=port)
