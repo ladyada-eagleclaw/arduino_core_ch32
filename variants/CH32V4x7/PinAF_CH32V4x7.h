@@ -14,6 +14,7 @@ enum {
   AFIO_TIM2_DEFAULT,
   AFIO_TIM3_DEFAULT,
   AFIO_TIM4_DEFAULT,
+  AFIO_I2C1_PB8_PB9,
 };
 
 static inline void pinV32_DisconnectDebug(PinName pin) {
@@ -47,6 +48,9 @@ static inline void pin_SetV32AFPin(uint32_t afnum) {
     break;
   case AFIO_TIM4_DEFAULT:
     GPIO_PinRemapConfig(GPIO_Remap_TIM4, DISABLE);
+    break;
+  case AFIO_I2C1_PB8_PB9:
+    GPIO_PinRemapConfig(GPIO_Remap_I2C1, ENABLE);
     break;
   default:
     break;

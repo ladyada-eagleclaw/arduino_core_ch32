@@ -2,13 +2,11 @@
 // SPDX-License-Identifier: BSD-3-Clause
 #include "Arduino.h"
 #include "twi.h"
+#include "twi_i2c_target.h"
 
 #if defined(WIRE_I3C)
 #if !defined(CH32V4x7)
 #error "WIRE_I3C requires CH32V407 or CH32V467"
-#endif
-#if OPT_I2C_SLAVE
-#error "WIRE_I3C supports controller mode only; set OPT_I2C_SLAVE=0"
 #endif
 #if defined(WIRE_SOFTWARE)
 #error "Select only one Wire backend"
@@ -65,13 +63,21 @@ void i2c_setTiming(i2c_t *obj, uint32_t frequency) {
 }
 
 /**
- * @brief Claim the I3C peripheral for controller transfers on PB11/PB10.
- * @param obj Wire instance with its pins and controller mode selected.
+ * @brief Select I3C controller mode or the separate I2C1 target backend.
+ * @param obj Wire instance with its pins and mode selected.
  * @param frequency Requested bus frequency in Hz.
- * The final two compatibility arguments are unused by this controller backend.
+ * The final argument is the target's shifted seven-bit address; the addressing
+ * mode argument is unused because these backends support seven-bit addresses.
  */
-void i2c_custom_init(i2c_t *obj, uint32_t frequency, uint32_t, uint32_t) {
+void i2c_custom_init(i2c_t *obj, uint32_t frequency, uint32_t,
+                     uint32_t ownAddress) {
   obj->i3cReady = false;
+#if OPT_I2C_SLAVE
+  if (!obj->isMaster && obj->sda == PB_9 && obj->scl == PB_8) {
+    i2c_target_init(obj, ownAddress);
+    return;
+  }
+#endif
   if (owner && owner != obj)
     return;
   if (!obj->isMaster || obj->sda != PB_11 || obj->scl != PB_10) {
@@ -100,6 +106,9 @@ void i2c_init(i2c_t *obj) { i2c_custom_init(obj, 400000, 0, 0); }
 /** @brief Release the pins and controller only if this instance owns them. */
 void i2c_deinit(i2c_t *obj) {
   obj->i3cReady = false;
+#if OPT_I2C_SLAVE
+  i2c_target_deinit(obj);
+#endif
   if (owner != obj)
     return;
   I3C_DeInit();

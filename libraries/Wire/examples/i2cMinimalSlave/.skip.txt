@@ -1,2 +1,1 @@
-# The CH32V4x7 I3C Wire backend supports controller mode only.
-CH32V4x7
+# Metro CH32V4x7 uses Wire1 for this example; Wire remains controller-only.

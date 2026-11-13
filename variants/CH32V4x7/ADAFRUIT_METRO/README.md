@@ -48,6 +48,29 @@ The driver never substitutes a STOP or dummy data for an unsupported request.
 After an unsupported `setClock()` value, transfers fail until
 `Wire.setClock(400000)` or `Wire.begin()` restores the supported configuration.
 
+`Wire1` provides hardware I2C peripheral (target) mode on **D3/SDA (PB9)** and
+**D2/SCL (PB8)** using the separate I2C1 peripheral at either CPU clock setting.
+Connect external pull-ups to 3.3 V and a common ground with the controller.
+These pins are independent of the labeled SDA/SCL connector and cannot
+simultaneously be used as GPIO/PWM.
+Use `Wire1.onReceive(callback)`, `Wire1.onRequest(callback)`, and
+`Wire1.begin(address)`; the `Wire` / `i2cMinimalSlave` example selects `Wire1`
+automatically on these boards.
+
+The target supports seven-bit addresses from `0x08` through `0x77`, repeated
+START, and address-only probes. Clock stretching must remain enabled (the
+default); the external controller sets the bus rate, so `Wire1.setClock()` does
+not change it. `Wire1.begin()` without an address does not enable controller
+mode on D3/D2. The default `Wire` bus retains its controller-only behavior.
+
+Callbacks run in interrupt context: keep them short and avoid blocking, Serial
+output, allocation, or bus reconfiguration. Receive messages retain the first
+`I2C_TXRX_BUFFER_SIZE` bytes (32 by default), discarding any excess. An
+`onRequest` callback runs once per read and can append up to that same limit
+using `Wire1.write()`; writes exceeding the remaining capacity return zero.
+Reads beyond the queued reply return `0xff`. `Wire1.end()` releases its address
+and pins without changing `Wire`.
+
 ## TinyUF2
 
 Production Metro CH32V407 and CH32V467 boards ship with TinyUF2 preinstalled.

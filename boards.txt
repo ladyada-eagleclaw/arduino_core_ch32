@@ -1275,7 +1275,7 @@ CH32V4x7_BOARDS.build.math_lib_gcc=-lm
 CH32V4x7_BOARDS.build.ch_extra_lib=
 CH32V4x7_BOARDS.build.IQ_math_RV32=
 CH32V4x7_BOARDS.build.serial_flags=-DSERIAL_UART_INSTANCE=1
-CH32V4x7_BOARDS.build.extra_flags=-DWIRE_I3C -DOPT_I2C_SLAVE=0
+CH32V4x7_BOARDS.build.extra_flags=-DWIRE_I3C -DOPT_I2C_SLAVE=1
 CH32V4x7_BOARDS.build.vid=0x239A
 CH32V4x7_BOARDS.build.usb_flags=-DUSBCON -DUSE_TINYUSB -DUSB_VID={build.vid} -DUSB_PID={build.pid} "-I{runtime.platform.path}/libraries/Adafruit_TinyUSB_Arduino/src/arduino"
 CH32V4x7_BOARDS.build.flash_offset=0x8000

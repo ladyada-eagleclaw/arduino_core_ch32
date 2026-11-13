@@ -18,9 +18,16 @@
 
 #include <Wire.h>
 #define MY_I2C_ADDRESS 0x33
- 
+
+#if defined(PIN_WIRE1_SDA) && defined(PIN_WIRE1_SCL)
+// Metro CH32V407/467: SDA on D3, SCL on D2, with external 3.3 V pull-ups.
+// The labeled SDA/SCL connector is the separate, controller-only Wire bus.
+TwoWire &PeripheralWire = Wire1;
+#else
+TwoWire &PeripheralWire = Wire;
 #undef LED_BUILTIN
 #define LED_BUILTIN PA2
+#endif
 uint32_t _nBlinkSpeed=500;
 
 void ReceiveEvent(int nNumBytes) {
@@ -29,22 +36,22 @@ void ReceiveEvent(int nNumBytes) {
   while(nNumBytes>0)
   {
     _nBlinkSpeed<<=8;
-    _nBlinkSpeed|=Wire.read();
+    _nBlinkSpeed|=PeripheralWire.read();
     nNumBytes--;
   }
 }
 
 void RequestEvent() {
   // returned 32-bit value is the current speed of blinking
-  Wire.write((const uint8_t *)&_nBlinkSpeed, sizeof(_nBlinkSpeed));;
+  PeripheralWire.write((const uint8_t *)&_nBlinkSpeed, sizeof(_nBlinkSpeed));
 }
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);  // Initialize digital pin LED_BUILTIN as an output.
-  Wire.begin(MY_I2C_ADDRESS);
   // Note: enable I2C slave functionality in /libraries/Wire/src/utility/twi.h to prevent error message for next two lines
-  Wire.onReceive(ReceiveEvent);
-  Wire.onRequest(RequestEvent);
+  PeripheralWire.onReceive(ReceiveEvent);
+  PeripheralWire.onRequest(RequestEvent);
+  PeripheralWire.begin(MY_I2C_ADDRESS);
 }
 
 void loop() {

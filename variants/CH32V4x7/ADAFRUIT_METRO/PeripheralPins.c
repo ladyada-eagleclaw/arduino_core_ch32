@@ -17,15 +17,16 @@ WEAK const PinMap PinMap_DAC[] = {
   {NC, NP, 0}
 };
 
-// Capability maps for the I3C controller's legacy I2C pins. The Wire
-// backend configures the controller and its default PB10/PB11 routing.
+// Wire uses I3C on PB10/PB11. Wire1 uses I2C1 target mode on PB8/PB9.
 WEAK const PinMap PinMap_I2C_SDA[] = {
   {PB_11, I3C, CH_PIN_DATA(CH_MODE_OUTPUT_50MHz, CH_CNF_OUTPUT_AFPP, NOPULL, AFIO_NONE)},
+  {PB_9, I2C1, CH_PIN_DATA(CH_MODE_OUTPUT_50MHz, CH_CNF_OUTPUT_AFOD, NOPULL, AFIO_I2C1_PB8_PB9)},
   {NC, NP, 0}
 };
 
 WEAK const PinMap PinMap_I2C_SCL[] = {
   {PB_10, I3C, CH_PIN_DATA(CH_MODE_OUTPUT_50MHz, CH_CNF_OUTPUT_AFPP, NOPULL, AFIO_NONE)},
+  {PB_8, I2C1, CH_PIN_DATA(CH_MODE_OUTPUT_50MHz, CH_CNF_OUTPUT_AFOD, NOPULL, AFIO_I2C1_PB8_PB9)},
   {NC, NP, 0}
 };
 

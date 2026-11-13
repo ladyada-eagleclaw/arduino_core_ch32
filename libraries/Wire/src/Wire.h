@@ -63,7 +63,7 @@ class TwoWire : public Stream {
     uint8_t transmitting;
 
     uint8_t ownAddress;
-    i2c_t _i2c;
+    i2c_t _i2c = {};
 
     std::function<void(int)> user_onReceive;
     std::function<void(void)> user_onRequest;
@@ -83,7 +83,8 @@ class TwoWire : public Stream {
     TwoWire(uint32_t sda, uint32_t scl);
 #if defined(WIRE_I3C)
     ~TwoWire();
-    // The I3C controller and dynamically allocated buffers have one owner.
+    // Each hardware peripheral and its dynamically allocated buffers have one
+    // owner.
     TwoWire(const TwoWire &) = delete;
     TwoWire &operator=(const TwoWire &) = delete;
 #endif
@@ -158,5 +159,8 @@ class TwoWire : public Stream {
 
 
 extern TwoWire Wire;
+#if defined(PIN_WIRE1_SDA) && defined(PIN_WIRE1_SCL)
+extern TwoWire Wire1;
+#endif
 
 #endif

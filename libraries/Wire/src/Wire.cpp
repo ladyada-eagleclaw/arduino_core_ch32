@@ -50,7 +50,8 @@ TwoWire::TwoWire(uint32_t sda, uint32_t scl)
 // Public Methods //////////////////////////////////////////////////////////////
 
 #if defined(WIRE_I3C)
-/** @brief Release owned I3C hardware and buffers when an instance is destroyed. */
+/** @brief Release owned bus hardware and buffers when an instance is destroyed.
+ */
 TwoWire::~TwoWire() { end(); }
 #endif
 
@@ -69,6 +70,8 @@ void TwoWire::begin(bool generalCall)
 void TwoWire::begin(uint8_t address, bool generalCall, bool NoStretchMode)
 {
 #if defined(WIRE_I3C)
+  // Stop peripheral interrupts before replacing buffers or changing callbacks.
+  i2c_deinit(&_i2c);
   // Reinitialization replaces these buffers; release the previous allocation.
   free(rxBuffer);
   free(txBuffer);
@@ -98,6 +101,14 @@ void TwoWire::begin(uint8_t address, bool generalCall, bool NoStretchMode)
   _i2c.NoStretchMode = (NoStretchMode == true) ? 1 : 0;
 
 #if defined(WIRE_I3C)
+  if (!_i2c.isMaster) {
+    // Receive callbacks run in an interrupt: allocate before enabling hardware.
+    allocateRxBuffer(I2C_TXRX_BUFFER_SIZE);
+#if OPT_I2C_SLAVE
+    i2c_attachSlaveTxEvent(&_i2c, onRequestService);
+    i2c_attachSlaveRxEvent(&_i2c, onReceiveService);
+#endif
+  }
   i2c_custom_init(&_i2c, 400000, I2C_AcknowledgedAddress_7bit, ownAddress);
 #else
   recoverBus(); // in case I2C bus (device) is stuck after a reset for example
@@ -106,12 +117,12 @@ void TwoWire::begin(uint8_t address, bool generalCall, bool NoStretchMode)
 
   if (_i2c.isMaster == 0) 
   {
-#if OPT_I2C_SLAVE
-	// MMOLE: these four lines were all commented
+#if OPT_I2C_SLAVE && !defined(WIRE_I3C)
+    // MMOLE: these four lines were all commented
     // i2c_attachSlaveTxEvent(&_i2c, reinterpret_cast<void(*)(i2c_t*)>(&TwoWire::onRequestService));
     // i2c_attachSlaveRxEvent(&_i2c, reinterpret_cast<void(*)(i2c_t*, uint8_t*, int)>(&TwoWire::onReceiveService));
     i2c_attachSlaveTxEvent(&_i2c, onRequestService);
-    i2c_attachSlaveRxEvent(&_i2c, onReceiveService); 
+    i2c_attachSlaveRxEvent(&_i2c, onReceiveService);
 #endif
   }
 }
@@ -329,6 +340,11 @@ size_t TwoWire::write(uint8_t data)
   */
 size_t TwoWire::write(const uint8_t *data, size_t quantity)
 {
+#if defined(WIRE_I3C)
+  if (!transmitting && quantity > I2C_TXRX_BUFFER_SIZE) {
+    return 0;
+  }
+#endif
   size_t ret = quantity;
 
   if (transmitting) {
@@ -556,5 +572,8 @@ void TwoWire::recoverBus(void)
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 TwoWire Wire;
+#if defined(PIN_WIRE1_SDA) && defined(PIN_WIRE1_SCL)
+TwoWire Wire1(PIN_WIRE1_SDA, PIN_WIRE1_SCL);
+#endif
 
 #endif
