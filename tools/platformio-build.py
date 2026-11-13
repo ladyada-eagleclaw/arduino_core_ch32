@@ -110,6 +110,7 @@ env.Append(
     ],
 
     CPPPATH=[
+        join(FRAMEWORK_DIR, "libraries", "Network", "lwip", "src", "include"),
         join(FRAMEWORK_DIR, "cores", "arduino"),
         join(FRAMEWORK_DIR, "cores", "arduino", "avr"),
         join(FRAMEWORK_DIR, "cores", "arduino", "ch32"),
